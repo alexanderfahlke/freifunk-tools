@@ -25,9 +25,9 @@ PUBLIC_KEY_FILENAME=${KEY_DIR}/${KEY_FILENAME}.ecdsa.pub
 
 if [ -e ${PRIVATE_KEY_FILENAME} ] && [ -f ${PRIVATE_KEY_FILENAME} ]
 then
-		echo "Warning, the keyfile ${KEY_DIR}/${KEY_FILE_NAME}.ecdsa already exists"
-		echo "Aborting!"
-		exit 1
+  echo "Warning, the keyfile ${KEY_DIR}/${KEY_FILE_NAME}.ecdsa already exists"
+  echo "Aborting!"
+  exit 1
 fi
 
 # prerequisites for the build
