@@ -1,6 +1,6 @@
 # What's this?
 
-This is little helper script that will do a few things for you, you otherwise needed to do manually.
+This is a little helper script that will do a few things for you, you otherwise needed to do manually.
 
 1. resynchronize the apt package index files from their sources
 2. install some tools you need to get this thing working
