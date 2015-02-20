@@ -19,7 +19,7 @@ KEY_DIR=~/.ssh
 KEY_FILENAME=freifunkfw
 
 # do not edit anything below this line!
-BUILD_DIR=$(mktemp -dt "ecdsagen.XXXXXX")
+BUILD_DIR=$(mktemp -dt "ecdsahelper.XXXXXX")
 PRIVATE_KEY_FILENAME=${KEY_DIR}/${KEY_FILENAME}.ecdsa
 PUBLIC_KEY_FILENAME=${KEY_DIR}/${KEY_FILENAME}.ecdsa.pub
 
