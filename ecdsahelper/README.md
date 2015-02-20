@@ -5,13 +5,12 @@ This is little helper script that will do a few things for you, you otherwise ne
 1. resynchronize the apt package index files from their sources
 2. install some tools you need to get this thing working
 
-  ```git```
-
-  ```pkg-config```
-
-  ```cmake```
-
-  ```doxygen```
+  ```
+  git
+  pkg-config
+  cmake
+  doxygen
+  ```
 
 3. make and install ```libuecc```
 
