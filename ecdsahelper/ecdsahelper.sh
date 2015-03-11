@@ -20,10 +20,10 @@ KEY_FILENAME=freifunkfw
 
 # do not edit anything below this line!
 BUILD_DIR=$(mktemp -dt "ecdsahelper.XXXXXX")
-PRIVATE_KEY_FILENAME=${KEY_DIR}/${KEY_FILENAME}.ecdsa
-PUBLIC_KEY_FILENAME=${KEY_DIR}/${KEY_FILENAME}.ecdsa.pub
+PRIVATE_KEY_FILENAME="${KEY_DIR}/${KEY_FILENAME}.ecdsa"
+PUBLIC_KEY_FILENAME="${KEY_DIR}/${KEY_FILENAME}.ecdsa.pub"
 
-if [ -e ${PRIVATE_KEY_FILENAME} ] && [ -f ${PRIVATE_KEY_FILENAME} ]
+if [ -e "${PRIVATE_KEY_FILENAME}" ] && [ -f "${PRIVATE_KEY_FILENAME}" ]
 then
   echo "Warning, the keyfile ${KEY_DIR}/${KEY_FILE_NAME}.ecdsa already exists"
   echo "Aborting!"
@@ -36,25 +36,25 @@ sudo apt-get install -y git pkg-config cmake
 sudo apt-get install -y doxygen
 
 # make and install libuecc
-cd ${BUILD_DIR}
+cd "${BUILD_DIR}"
 wget http://git.universe-factory.net/libuecc/snapshot/libuecc-4.tar
 tar xvf libuecc-4.tar
-cd libuecc-4
+cd "libuecc-4"
 mkdir build
-cd build
+cd "build"
 cmake ..
 sudo make install
 
 # make and install ecdsakeygen
 cd ${BUILD_DIR}
 git clone https://github.com/tcatm/ecdsautils.git
-cd ecdsautils
+cd "ecdsautils"
 mkdir build
-cd build
+cd "build"
 cmake ..
 sudo make install
 
 # generate ecdsa keypair
-ecdsakeygen -s > ${PRIVATE_KEY_FILENAME}
-ecdsakeygen -p < ${PRIVATE_KEY_FILENAME} > ${PUBLIC_KEY_FILENAME}
-chmod 400 ${PRIVATE_KEY_FILENAME} # owner can only read, writing intentionally disabled ;)
+ecdsakeygen -s > "${PRIVATE_KEY_FILENAME}"
+ecdsakeygen -p < "${PRIVATE_KEY_FILENAME}" > "${PUBLIC_KEY_FILENAME}"
+chmod 400 "${PRIVATE_KEY_FILENAME}" # writing intentionally disabled ;)
