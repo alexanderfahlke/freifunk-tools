@@ -15,8 +15,8 @@
 # limitations under the License.
 
 # adjust the following two lines (if you need)
-KEY_DIR=~/.ssh
-KEY_FILENAME=freifunkfw
+KEY_DIR="${HOME}/.ssh"
+KEY_FILENAME='freifunkfw'
 
 # do not edit anything below this line!
 BUILD_DIR=$(mktemp -dt "ecdsahelper.XXXXXX")
@@ -37,20 +37,20 @@ sudo apt-get install -y doxygen
 
 # make and install libuecc
 cd "${BUILD_DIR}"
-wget http://git.universe-factory.net/libuecc/snapshot/libuecc-4.tar
-tar xvf libuecc-4.tar
-cd "libuecc-4"
-mkdir build
-cd "build"
+wget 'http://git.universe-factory.net/libuecc/snapshot/libuecc-4.tar'
+tar xvf 'libuecc-4.tar'
+cd 'libuecc-4'
+mkdir 'build'
+cd 'build'
 cmake ..
 sudo make install
 
 # make and install ecdsakeygen
-cd ${BUILD_DIR}
-git clone https://github.com/tcatm/ecdsautils.git
-cd "ecdsautils"
-mkdir build
-cd "build"
+cd "${BUILD_DIR}"
+git clone 'https://github.com/tcatm/ecdsautils.git'
+cd 'ecdsautils'
+mkdir 'build'
+cd 'build'
 cmake ..
 sudo make install
 
