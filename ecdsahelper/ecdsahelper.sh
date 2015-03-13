@@ -33,8 +33,8 @@ fi
 
 # exit if KEY_DIR is a file
 if [ -e "${KEY_DIR}" ] && [ -f "${KEY_DIR}" ]; then
-  echo "$0: The keystore ${KEY_DIR} is not a directory, exiting..."
-  exit 2
+	echo "$0: The keystore ${KEY_DIR} is not a directory, exiting..."
+	exit 2
 fi
 
 # create KEY_DIR if it does not exist
@@ -45,8 +45,8 @@ fi
 
 # exit if private key already exists
 if [ -e "${PRIVATE_KEY_FILENAME}" ] && [ -f "${PRIVATE_KEY_FILENAME}" ]; then
-  echo "$0: The private key ${KEY_DIR}/${KEY_FILE_NAME}.ecdsa already exists, exiting..."
-  exit 3
+	echo "$0: The private key ${KEY_DIR}/${KEY_FILE_NAME}.ecdsa already exists, exiting..."
+	exit 3
 fi
 
 # prerequisites for the build
