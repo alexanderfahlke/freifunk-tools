@@ -27,6 +27,32 @@ PRIVATE_KEY_FILENAME="${KEY_DIR}/${KEY_FILENAME}.ecdsa"
 PUBLIC_KEY_FILENAME="${KEY_DIR}/${KEY_FILENAME}.ecdsa.pub"
 EXIT_CODE=0
 
+# exit if KEY_DIR is a file
+EXIT_CODE=$((EXIT_CODE + 1))
+if [ -e "${KEY_DIR}" ] && [ -f "${KEY_DIR}" ]; then
+	echo "$0: The keystore \"${KEY_DIR}\" is not a directory, exiting..."
+	exit ${EXIT_CODE}
+fi
+
+# exit if private key already exists
+EXIT_CODE=$((EXIT_CODE + 1))
+if [ -e "${PRIVATE_KEY_FILENAME}" ] && [ -f "${PRIVATE_KEY_FILENAME}" ]; then
+	echo "$0: The private key \"${PRIVATE_KEY_FILENAME}\" already exists, exiting..."
+	exit ${EXIT_CODE}
+fi
+
+# create KEY_DIR if it does not exist
+EXIT_CODE=$((EXIT_CODE + 1))
+if [ ! -e "${KEY_DIR}" ] && [ ! -d "${KEY_DIR}" ]; then
+	mkdir "${KEY_DIR}"
+	if [ $? -ne 0 ]; then
+		echo "$0: Can't create key directory, exiting..."
+		exit ${EXIT_CODE}
+	fi
+
+	echo '*' > "${KEY_DIR}/.gitignore" # add gitignore file to prevent adding the keys to a git repository ;)
+fi
+
 # check if apt-get is available
 EXIT_CODE=$((EXIT_CODE + 1))
 which 'apt-get' > /dev/null
@@ -93,32 +119,6 @@ if [ $? -ne 0 ]; then
 	exit ${EXIT_CODE}
 fi
 
-# exit if KEY_DIR is a file
-EXIT_CODE=$((EXIT_CODE + 1))
-if [ -e "${KEY_DIR}" ] && [ -f "${KEY_DIR}" ]; then
-	echo "$0: The keystore ${KEY_DIR} is not a directory, exiting..."
-	exit ${EXIT_CODE}
-fi
-
-# exit if private key already exists
-EXIT_CODE=$((EXIT_CODE + 1))
-if [ -e "${PRIVATE_KEY_FILENAME}" ] && [ -f "${PRIVATE_KEY_FILENAME}" ]; then
-	echo "$0: The private key ${KEY_DIR}/${KEY_FILE_NAME}.ecdsa already exists, exiting..."
-	exit ${EXIT_CODE}
-fi
-
-# create KEY_DIR if it does not exist
-EXIT_CODE=$((EXIT_CODE + 1))
-if [ ! -e "${KEY_DIR}" ] && [ ! -d "${KEY_DIR}" ]; then
-	mkdir "${KEY_DIR}"
-	if [ $? -ne 0 ]; then
-		echo "$0: Can't create key directory, exiting..."
-		exit ${EXIT_CODE}
-	fi
-
-	echo '*' > "${KEY_DIR}/.gitignore" # add gitignore file to prevent adding the keys to a git repository ;)
-fi
-
 # make and install libuecc
 EXIT_CODE=$((EXIT_CODE + 1))
 cd "${BUILD_TMP_DIR}"
@@ -175,7 +175,7 @@ if [ $? -ne 0 ]; then
 fi
 ecdsakeygen -p < "${PRIVATE_KEY_FILENAME}" > "${PUBLIC_KEY_FILENAME}"
 chmod 400 "${PRIVATE_KEY_FILENAME}" # writing intentionally disabled ;)
-echo "$0: Keys successfully created in ${KEY_DIR}."
+echo -e "\n\n$0: Keys successfully created in \"${KEY_DIR}\"."
 
 # clean up build directory
 if [ -n "${BUILD_TMP_DIR}" ] && [ "${BUILD_TMP_DIR}" != "/" ]; then
