@@ -29,7 +29,7 @@ EXIT_CODE=0
 
 # check if apt-get is available
 EXIT_CODE=$((EXIT_CODE + 1))
-which -s 'apt-get'
+which 'apt-get' > /dev/null
 if [ $? -ne 0 ]; then
 	echo "$0: \"apt-get\" not found, exiting..."
 	exit ${EXIT_CODE}
@@ -43,7 +43,7 @@ fi
 
 # install git if not present
 EXIT_CODE=$((EXIT_CODE + 1))
-which -s 'git'
+which 'git' > /dev/null
 if [ $? -ne 0 ]; then
 	sudo apt-get install -y 'git' 2> /dev/null
 	if [ $? -ne 0 ]; then
@@ -54,7 +54,7 @@ fi
 
 # install pkg-config if not present
 EXIT_CODE=$((EXIT_CODE + 1))
-which -s 'pkg-config'
+which 'pkg-config' > /dev/null
 if [ $? -ne 0 ]; then
 	sudo apt-get install -y 'pkg-config' 2> /dev/null
 	if [ $? -ne 0 ]; then
@@ -65,7 +65,7 @@ fi
 
 # install cmake if not present
 EXIT_CODE=$((EXIT_CODE + 1))
-which -s 'cmake'
+which 'cmake' > /dev/null
 if [ $? -ne 0 ]; then
 	sudo apt-get install -y 'cmake' 2> /dev/null
 	if [ $? -ne 0 ]; then
@@ -76,7 +76,7 @@ fi
 
 # install doxygen if not present
 EXIT_CODE=$((EXIT_CODE + 1))
-which -s 'doxygen'
+which 'doxygen' > /dev/null
 if [ $? -ne 0 ]; then
 	sudo apt-get install -y 'doxygen' 2> /dev/null
 	if [ $? -ne 0 ]; then
@@ -87,7 +87,7 @@ fi
 
 # try to create the build temp directory
 EXIT_CODE=$((EXIT_CODE + 1))
-BUILD_TMP_DIR=$(mktemp -q -dt 'ecdsahelper')
+BUILD_TMP_DIR=$(mktemp -dt 'ecdsahelper.XXXXXX')
 if [ $? -ne 0 ]; then
 	echo "$0: Can't create temp directory, exiting..."
 	exit ${EXIT_CODE}
@@ -175,6 +175,7 @@ if [ $? -ne 0 ]; then
 fi
 ecdsakeygen -p < "${PRIVATE_KEY_FILENAME}" > "${PUBLIC_KEY_FILENAME}"
 chmod 400 "${PRIVATE_KEY_FILENAME}" # writing intentionally disabled ;)
+echo "$0: Keys successfully created in ${KEY_DIR}."
 
 # clean up build directory
 if [ -n "${BUILD_TMP_DIR}" ] && [ "${BUILD_TMP_DIR}" != "/" ]; then
