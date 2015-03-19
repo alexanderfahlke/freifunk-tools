@@ -175,6 +175,8 @@ if [ $? -ne 0 ]; then
 fi
 ecdsakeygen -p < "${PRIVATE_KEY_FILENAME}" > "${PUBLIC_KEY_FILENAME}"
 chmod 400 "${PRIVATE_KEY_FILENAME}" # writing intentionally disabled ;)
+chmod 644 "${PUBLIC_KEY_FILENAME}"
+
 echo -e "\n\n$0: Keys successfully created in \"${KEY_DIR}\"."
 
 # clean up build directory
